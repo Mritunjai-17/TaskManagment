@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-sequelize.sync({ alter: true })
+sequelize.sync()
     .then(() => {
         console.log("Database Synced");
         app.listen(PORT, () => {
@@ -38,6 +38,15 @@ sequelize.sync({ alter: true })
     });
 
 app.use("/api/v1", routes);
+
+const swaggerUI = require("swagger-ui-express");
+const swaggerSpec = require("./src/docs/swagger");
+
+app.use(
+    "/api-docs",
+    swaggerUI.serve,
+    swaggerUI.setup(swaggerSpec)
+);
 
 app.listen(PORT, () => {
     console.log(`Server running on ${PORT}`);
