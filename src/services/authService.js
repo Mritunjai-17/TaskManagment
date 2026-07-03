@@ -24,7 +24,9 @@ class AuthService {
 
     async login(email, password) {
 
-        const user = await userRepository.getByEmail(email);
+       const user = await userRepository.getByEmail(email);
+
+        console.log("User from DB:", user);
 
         if (!user) {
             throw new Error("Invalid email or password");
